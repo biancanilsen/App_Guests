@@ -4,6 +4,7 @@ import 'package:flutter_guests/feature/guests/presentation/pages/guest_list.dart
 import 'package:flutter_guests/feature/guests/presentation/pages/guest_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GuestListPage extends StatelessWidget {
   const GuestListPage({Key? key}) : super(key: key);
@@ -28,39 +29,6 @@ class DocumentosView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Guests'),
-        // actions: <Widget>[
-        //   IconButton(
-        //     icon: const Icon(Icons.clear_all),
-        //     onPressed: () {
-        //       // excluir todas as notas
-        //       showDialog<String>(
-        //         context: context,
-        //         builder: (BuildContext context) => AlertDialog(
-        //           title: const Text('Excluir Todas as Notas'),
-        //           content: const Text('Confirmar operação?'),
-        //           actions: <Widget>[
-        //             TextButton(
-        //               onPressed: () => Navigator.pop(context),
-        //               child: const Text('Cancelar'),
-        //             ),
-        //             TextButton(
-        //               onPressed: () {
-        //                 context.read<GuestsCubit>().deleteAllGuests();
-        //                 Navigator.pop(context);
-        //                 ScaffoldMessenger.of(context)
-        //                   ..hideCurrentSnackBar()
-        //                   ..showSnackBar(const SnackBar(
-        //                     content: Text('Notas excluídas com sucesso'),
-        //                   ));
-        //               },
-        //               child: const Text('OK'),
-        //             ),
-        //           ],
-        //         ),
-        //       );
-        //     },
-        //   ),
-        // ],
       ),
       body: const _Content(),
       floatingActionButton: FloatingActionButton(
@@ -106,7 +74,7 @@ class _Content extends StatelessWidget {
       }
     } else {
       return const Center(
-        child: Text('Erro ao recuperar notas.'),
+        child: Text('Erro ao recuperar convidados.'),
       );
     }
   }
@@ -133,6 +101,21 @@ class _GuestsList extends StatelessWidget {
               ),
               trailing: Wrap(children: <Widget>[
                 IconButton(
+                  icon: const Icon(Icons.message),
+                  onPressed: () {
+                    openWhatsApp() async {
+                      var whatsappUrl =
+                          "whatsapp://send?phone=+5586994324465&text=Olá,tudo bem ?";
+
+                      if (await canLaunch(whatsappUrl)) {
+                        await launch(whatsappUrl);
+                      } else {
+                        throw 'Could not launch $whatsappUrl';
+                      }
+                    }
+                  },
+                ),
+                IconButton(
                   icon: const Icon(Icons.edit),
                   onPressed: () {
                     Navigator.push(
@@ -151,7 +134,7 @@ class _GuestsList extends StatelessWidget {
                       showDialog<String>(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
-                          title: const Text('Excluir Nota'),
+                          title: const Text('Excluir convidado'),
                           content: const Text('Confirmar operação?'),
                           actions: <Widget>[
                             TextButton(
@@ -167,7 +150,8 @@ class _GuestsList extends StatelessWidget {
                                 ScaffoldMessenger.of(context)
                                   ..hideCurrentSnackBar()
                                   ..showSnackBar(const SnackBar(
-                                    content: Text('Nota excluída com sucesso'),
+                                    content:
+                                        Text('Convidado excluído com sucesso'),
                                   ));
                               },
                               child: const Text('OK'),

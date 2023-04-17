@@ -61,7 +61,7 @@ class GuestsEditView extends StatelessWidget {
       ),
       body: BlocListener<GuestsCubit, GuestsState>(
         listener: (context, state) {
-          // a descricao dos estados esta no arquivo notes_state e os estados
+          // a descricao dos estados esta no arquivo guest_state e os estados
           // nao tratados aqui sao utilizados na tela de lista de notas
           // print(state.toString());
           if (state is GuestsInitial) {
@@ -122,7 +122,7 @@ class GuestsEditView extends StatelessWidget {
                       onFieldSubmitted: (String value) {},
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
-                        // o estado NotesValidating eh emitido quando ha erro de
+                        // o estado GuestsValidating eh emitido quando ha erro de
                         // validacao em qualquer campo do formulario e
                         // a mensagem de erro tambem eh apresentada
                         if (state is GuestValidating) {
@@ -163,7 +163,7 @@ class GuestsEditView extends StatelessWidget {
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
-                        // o estado NotesValidating eh emitido quando ha erro de
+                        // o estado GuestsValidating eh emitido quando ha erro de
                         // validacao em qualquer campo do formulario e
                         // a mensagem de erro tambem eh apresentada
                         if (state is GuestValidating) {
@@ -195,7 +195,7 @@ class GuestsEditView extends StatelessWidget {
                       onFieldSubmitted: (String value) {},
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
-                        // o estado NotesValidating eh emitido quando ha erro de
+                        // o estado GuestsValidating eh emitido quando ha erro de
                         // validacao em qualquer campo do formulario e
                         // a mensagem de erro tambem eh apresentada
                         if (state is GuestValidating) {

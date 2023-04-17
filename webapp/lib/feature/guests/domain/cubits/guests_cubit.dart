@@ -3,6 +3,7 @@ import 'package:flutter_guests/feature/guests/data/database/database_provider.da
 import 'package:flutter_guests/feature/guests/data/models/guest_model.dart';
 import 'package:equatable/equatable.dart';
 import '../../data/services/api_service.dart';
+import 'package:flutter/foundation.dart';
 part 'guests_state.dart';
 
 class GuestsCubit extends Cubit<GuestsState> {
@@ -32,7 +33,7 @@ class GuestsCubit extends Cubit<GuestsState> {
 
     // A linha abaixo nesse cubit simula tempo de processamento no servidor
     // serve para testar o circular indicator
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     try {
       await _apiService.deleteGuest(guestId);
       getGuests();
@@ -66,10 +67,11 @@ class GuestsCubit extends Cubit<GuestsState> {
     try {
       //Se o metodo nao recebeu um id a nota será incluida, caso contrario
       //a nota existente sera atualizada pelo id
+      debugPrint('id: $id');
       if (id == null) {
         editGuest = await _apiService.saveGuest(editGuest);
       } else {
-        editGuest = await _apiService.uploadGuests(editGuest);
+        editGuest = await _apiService.updateGuests(editGuest);
       }
       emit(const GuestsSuccess());
       // buscarNotas();
