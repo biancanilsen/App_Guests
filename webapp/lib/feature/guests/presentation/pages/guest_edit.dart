@@ -56,8 +56,75 @@ class GuestsEditView extends StatelessWidget {
       _emailController.text = guest!.Email;
     }
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Guests'),
+        backgroundColor: Color(0xFF256070),
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        elevation: 0,
+      ),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(top: 20),
+        child: SizedBox(
+          height: 70,
+          width: 70,
+          child: BlocBuilder<GuestValidationCubit, GuestValidationState>(
+            builder: (context, state) {
+              return Padding(
+                padding: const EdgeInsets.all(0.1),
+                child: FloatingActionButton(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  onPressed: state is GuestValidated
+                      ? () {
+                          if (_formKey.currentState!.validate()) {
+                            //fechar teclado
+                            FocusScope.of(context).unfocus();
+                            context.read<GuestsCubit>().saveGuest(
+                                guest?.GuestId,
+                                _nameController.text,
+                                _phoneController.text,
+                                _emailController.text);
+                          }
+                        }
+                      : null,
+                  child: Container(
+                    height: 70,
+                    width: 70,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white, width: 4),
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        begin: const Alignment(0.7, -0.5),
+                        end: const Alignment(0.6, 0.5),
+                        colors: [
+                          Color(0xFF256070),
+                          Color.fromARGB(255, 117, 164, 177),
+                        ],
+                      ),
+                    ),
+                    child: Icon(Icons.save, size: 25),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        color: Color(0xFF256070),
+        shape: CircularNotchedRectangle(),
+        child: Container(
+          height: 60,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
+        ),
       ),
       body: BlocListener<GuestsCubit, GuestsState>(
         listener: (context, state) {
@@ -106,138 +173,181 @@ class GuestsEditView extends StatelessWidget {
               children: <Widget>[
                 BlocBuilder<GuestValidationCubit, GuestValidationState>(
                   builder: (context, state) {
-                    return TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Name',
-                      ),
-                      controller: _nameController,
-                      focusNode: _nameFocusNode,
-                      textInputAction: TextInputAction.next,
-                      onEditingComplete: _phoneFocusNode.requestFocus,
-                      onChanged: (text) {
-                        // a validacao eh realizada em toda alteracao do campo
-                        context.read<GuestValidationCubit>().validaForm(
-                            _nameController.text, _phoneController.text);
-                      },
-                      onFieldSubmitted: (String value) {},
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) {
-                        // o estado GuestsValidating eh emitido quando ha erro de
-                        // validacao em qualquer campo do formulario e
-                        // a mensagem de erro tambem eh apresentada
-                        if (state is GuestValidating) {
-                          if (state.tituloMessage == '') {
-                            return null;
-                          } else {
-                            return state.tituloMessage;
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                          top: 190.0, left: 8.0, right: 8.0),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.grey),
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          labelText: 'Name',
+                        ),
+                        controller: _nameController,
+                        focusNode: _nameFocusNode,
+                        textInputAction: TextInputAction.next,
+                        onEditingComplete: _phoneFocusNode.requestFocus,
+                        onChanged: (text) {
+                          // a validacao eh realizada em toda alteracao do campo
+                          context.read<GuestValidationCubit>().validaForm(
+                              _nameController.text, _phoneController.text);
+                        },
+                        onFieldSubmitted: (String value) {},
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          // o estado GuestsValidating eh emitido quando ha erro de
+                          // validacao em qualquer campo do formulario e
+                          // a mensagem de erro tambem eh apresentada
+                          if (state is GuestValidating) {
+                            if (state.tituloMessage == '') {
+                              return null;
+                            } else {
+                              return state.tituloMessage;
+                            }
                           }
-                        }
-                      },
+                        },
+                      ),
                     );
                   },
                 ),
                 BlocBuilder<GuestValidationCubit, GuestValidationState>(
                   builder: (context, state) {
-                    return TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Telefone',
-                      ),
-                      controller: _phoneController,
-                      focusNode: _phoneFocusNode,
-                      textInputAction: TextInputAction.done,
-                      onChanged: (text) {
-                        // a validacao eh realizada em toda alteracao do campo
-                        context.read<GuestValidationCubit>().validaForm(
-                            _nameController.text, _phoneController.text);
-                      },
-                      onFieldSubmitted: (String value) {
-                        if (_formKey.currentState!.validate()) {
-                          //fechar teclado
-                          FocusScope.of(context).unfocus();
-                          context.read<GuestsCubit>().saveGuest(
-                              guest?.GuestId,
-                              _nameController.text,
-                              _phoneController.text,
-                              _emailController.text);
-                        }
-                      },
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) {
-                        // o estado GuestsValidating eh emitido quando ha erro de
-                        // validacao em qualquer campo do formulario e
-                        // a mensagem de erro tambem eh apresentada
-                        if (state is GuestValidating) {
-                          if (state.conteudoMessage == '') {
-                            return null;
-                          } else {
-                            return state.conteudoMessage;
+                    return Padding(
+                      padding:
+                          const EdgeInsets.only(left: 8.0, right: 8, top: 8.0),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.grey),
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          labelText: 'Telefone',
+                        ),
+                        controller: _phoneController,
+                        focusNode: _phoneFocusNode,
+                        textInputAction: TextInputAction.done,
+                        onChanged: (text) {
+                          // a validacao eh realizada em toda alteracao do campo
+                          context.read<GuestValidationCubit>().validaForm(
+                              _nameController.text, _phoneController.text);
+                        },
+                        onFieldSubmitted: (String value) {
+                          if (_formKey.currentState!.validate()) {
+                            //fechar teclado
+                            FocusScope.of(context).unfocus();
+                            context.read<GuestsCubit>().saveGuest(
+                                guest?.GuestId,
+                                _nameController.text,
+                                _phoneController.text,
+                                _emailController.text);
                           }
-                        }
-                      },
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          // o estado GuestsValidating eh emitido quando ha erro de
+                          // validacao em qualquer campo do formulario e
+                          // a mensagem de erro tambem eh apresentada
+                          if (state is GuestValidating) {
+                            if (state.conteudoMessage == '') {
+                              return null;
+                            } else {
+                              return state.conteudoMessage;
+                            }
+                          }
+                        },
+                      ),
                     );
                   },
                 ),
                 BlocBuilder<GuestValidationCubit, GuestValidationState>(
                   builder: (context, state) {
-                    return TextFormField(
-                      decoration: const InputDecoration(
-                        labelText: 'Email',
-                      ),
-                      controller: _emailController,
-                      focusNode: _emailFocusNode,
-                      textInputAction: TextInputAction.next,
-                      onEditingComplete: _phoneFocusNode.requestFocus,
-                      onChanged: (text) {
-                        // a validacao eh realizada em toda alteracao do campo
-                        context.read<GuestValidationCubit>().validaForm(
-                            _emailController.text, _phoneController.text);
-                      },
-                      onFieldSubmitted: (String value) {},
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (value) {
-                        // o estado GuestsValidating eh emitido quando ha erro de
-                        // validacao em qualquer campo do formulario e
-                        // a mensagem de erro tambem eh apresentada
-                        if (state is GuestValidating) {
-                          if (state.tituloMessage == '') {
-                            return null;
-                          } else {
-                            return state.tituloMessage;
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.grey),
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          labelText: 'Email',
+                        ),
+                        controller: _emailController,
+                        focusNode: _emailFocusNode,
+                        textInputAction: TextInputAction.next,
+                        onEditingComplete: _phoneFocusNode.requestFocus,
+                        onChanged: (text) {
+                          // a validacao eh realizada em toda alteracao do campo
+                          context.read<GuestValidationCubit>().validaForm(
+                              _emailController.text, _phoneController.text);
+                        },
+                        onFieldSubmitted: (String value) {},
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          // o estado GuestsValidating eh emitido quando ha erro de
+                          // validacao em qualquer campo do formulario e
+                          // a mensagem de erro tambem eh apresentada
+                          if (state is GuestValidating) {
+                            if (state.tituloMessage == '') {
+                              return null;
+                            } else {
+                              return state.tituloMessage;
+                            }
                           }
-                        }
-                      },
+                        },
+                      ),
                     );
                   },
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child:
-                        BlocBuilder<GuestValidationCubit, GuestValidationState>(
-                      builder: (context, state) {
-                        // o botao de salvar eh habilitado somente quando
-                        // o formulario eh completamente validado
-                        return ElevatedButton(
-                          onPressed: state is GuestValidated
-                              ? () {
-                                  if (_formKey.currentState!.validate()) {
-                                    //fechar teclado
-                                    FocusScope.of(context).unfocus();
-                                    context.read<GuestsCubit>().saveGuest(
-                                        guest?.GuestId,
-                                        _nameController.text,
-                                        _phoneController.text,
-                                        _emailController.text);
-                                  }
-                                }
-                              : null,
-                          child: const Text('Salvar'),
-                        );
-                      },
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(vertical: 16.0),
+                //   child: SizedBox(
+                //     width: double.infinity,
+                //     height: 65,
+                //     child:
+                //         BlocBuilder<GuestValidationCubit, GuestValidationState>(
+                //       builder: (context, state) {
+                //         // o botao de salvar eh habilitado somente quando
+                //         // o formulario eh completamente validado
+                //         return Padding(
+                //           padding: const EdgeInsets.all(8.0),
+                //           child: ElevatedButton(
+                //             style: ButtonStyle(
+                //                 foregroundColor:
+                //                     MaterialStateProperty.all<Color>(
+                //                         Colors.white),
+                //                 backgroundColor:
+                //                     MaterialStateProperty.all<Color>(
+                //                         Colors.green),
+                //                 shape: MaterialStateProperty.all<
+                //                         RoundedRectangleBorder>(
+                //                     RoundedRectangleBorder(
+                //                         borderRadius:
+                //                             BorderRadius.circular(15.0),
+                //                         side: BorderSide(color: Colors.grey)))),
+                //             onPressed: state is GuestValidated
+                //                 ? () {
+                //                     if (_formKey.currentState!.validate()) {
+                //                       //fechar teclado
+                //                       FocusScope.of(context).unfocus();
+                //                       context.read<GuestsCubit>().saveGuest(
+                //                           guest?.GuestId,
+                //                           _nameController.text,
+                //                           _phoneController.text,
+                //                           _emailController.text);
+                //                     }
+                //                   }
+                //                 : null,
+                //             child: const Text('Salvar'),
+                //           ),
+                //         );
+                //       },
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

@@ -5,6 +5,7 @@ import 'package:flutter_guests/feature/guests/presentation/pages/guest_edit.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/cupertino.dart';
 
 class GuestListPage extends StatelessWidget {
   const GuestListPage({Key? key}) : super(key: key);
@@ -27,21 +28,75 @@ class DocumentosView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Guests'),
+        backgroundColor: Color(0xFF256070),
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        elevation: 0,
       ),
-      body: const _Content(),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          // como o FAB cria uma nota nova, a nota nao eh parametro recebido
-          // na tela de edicao
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const GuestEditPage(guest: null)),
-          );
-        },
+      body: Column(
+        children: [
+          Container(
+            height: 200,
+            width: double.infinity,
+            child: Image.asset(
+              "images/guestsContainer.png",
+            ),
+          ),
+          Expanded(child: const _Content()),
+        ],
+      ),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(top: 20),
+        child: SizedBox(
+          height: 70,
+          width: 70,
+          child: FloatingActionButton(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const GuestEditPage(guest: null)),
+              );
+            },
+            child: Container(
+              height: 70,
+              width: 70,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.white, width: 4),
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  begin: const Alignment(0.7, -0.5),
+                  end: const Alignment(0.6, 0.5),
+                  colors: [
+                    Color(0xFF256070),
+                    Color.fromARGB(255, 117, 164, 177),
+                  ],
+                ),
+              ),
+              child: Icon(Icons.add, size: 30),
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        color: Color(0xFF256070),
+        shape: CircularNotchedRectangle(),
+        child: Container(
+          height: 60,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -89,11 +144,13 @@ class _GuestsList extends StatelessWidget {
       children: [
         for (final guest in guests!) ...[
           Padding(
-            padding: const EdgeInsets.all(2.5),
+            padding: const EdgeInsets.only(top: 15.5, left: 10.5, right: 10.5),
             child: ListTile(
+              // hoverColor: Colors.red,
               tileColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
+                side: BorderSide(color: Colors.grey, width: 1),
               ),
               title: Text(guest.Name),
               subtitle: Text(
