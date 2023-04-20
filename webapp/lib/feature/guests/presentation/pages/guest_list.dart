@@ -152,9 +152,9 @@ class _GuestsList extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
                 side: BorderSide(color: Colors.grey, width: 1),
               ),
-              title: Text(guest.Name),
+              title: Text(guest.name),
               subtitle: Text(
-                guest.Phone,
+                guest.phone,
               ),
               trailing: Wrap(children: <Widget>[
                 IconButton(
@@ -198,21 +198,21 @@ class _GuestsList extends StatelessWidget {
                               onPressed: () => Navigator.pop(context),
                               child: const Text('Cancelar'),
                             ),
-                            TextButton(
-                              onPressed: () {
-                                context
-                                    .read<GuestsCubit>()
-                                    .deleteGuest(guest.GuestId);
-                                Navigator.pop(context);
-                                ScaffoldMessenger.of(context)
-                                  ..hideCurrentSnackBar()
-                                  ..showSnackBar(const SnackBar(
-                                    content:
-                                        Text('Convidado excluído com sucesso'),
-                                  ));
-                              },
-                              child: const Text('OK'),
-                            ),
+                            // TextButton(
+                            //   onPressed: () {
+                            //     context
+                            //         .read<GuestsCubit>()
+                            //         .deleteGuest(guest.id);
+                            //     Navigator.pop(context);
+                            //     ScaffoldMessenger.of(context)
+                            //       ..hideCurrentSnackBar()
+                            //       ..showSnackBar(const SnackBar(
+                            //         content:
+                            //             Text('Convidado excluído com sucesso'),
+                            //       ));
+                            //   },
+                            //   child: const Text('OK'),
+                            // ),
                           ],
                         ),
                       );

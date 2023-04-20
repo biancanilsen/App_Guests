@@ -51,9 +51,9 @@ class GuestsEditView extends StatelessWidget {
       _phoneController.text = '';
       _emailController.text = '';
     } else {
-      _nameController.text = guest!.Name;
-      _phoneController.text = guest!.Phone;
-      _emailController.text = guest!.Email;
+      _nameController.text = guest!.name;
+      _phoneController.text = guest!.phone;
+      _emailController.text = guest!.email;
     }
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -78,15 +78,15 @@ class GuestsEditView extends StatelessWidget {
                   elevation: 0,
                   onPressed: state is GuestValidated
                       ? () {
-                          if (_formKey.currentState!.validate()) {
-                            //fechar teclado
-                            FocusScope.of(context).unfocus();
-                            context.read<GuestsCubit>().saveGuest(
-                                guest?.GuestId,
-                                _nameController.text,
-                                _phoneController.text,
-                                _emailController.text);
-                          }
+                          // if (_formKey.currentState!.validate()) {
+                          //   //fechar teclado
+                          //   FocusScope.of(context).unfocus();
+                          //   context.read<GuestsCubit>().saveGuest(
+                          //       guest?.id,
+                          //       _nameController.text,
+                          //       _phoneController.text,
+                          //       _emailController.text);
+                          // }
                         }
                       : null,
                   child: Container(
@@ -183,7 +183,7 @@ class GuestsEditView extends StatelessWidget {
                                 BorderSide(width: 1, color: Colors.grey),
                             borderRadius: BorderRadius.circular(15.0),
                           ),
-                          labelText: 'Name',
+                          labelText: 'name',
                         ),
                         controller: _nameController,
                         focusNode: _nameFocusNode,
@@ -238,11 +238,11 @@ class GuestsEditView extends StatelessWidget {
                           if (_formKey.currentState!.validate()) {
                             //fechar teclado
                             FocusScope.of(context).unfocus();
-                            context.read<GuestsCubit>().saveGuest(
-                                guest?.GuestId,
-                                _nameController.text,
-                                _phoneController.text,
-                                _emailController.text);
+                            // context.read<GuestsCubit>().saveGuest(
+                            //     guest?.id,
+                            //     _nameController.text,
+                            //     _phoneController.text,
+                            //     _emailController.text);
                           }
                         },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -273,7 +273,7 @@ class GuestsEditView extends StatelessWidget {
                                 BorderSide(width: 1, color: Colors.grey),
                             borderRadius: BorderRadius.circular(15.0),
                           ),
-                          labelText: 'Email',
+                          labelText: 'email',
                         ),
                         controller: _emailController,
                         focusNode: _emailFocusNode,
@@ -334,7 +334,7 @@ class GuestsEditView extends StatelessWidget {
                 //                       //fechar teclado
                 //                       FocusScope.of(context).unfocus();
                 //                       context.read<GuestsCubit>().saveGuest(
-                //                           guest?.GuestId,
+                //                           guest?.id,
                 //                           _nameController.text,
                 //                           _phoneController.text,
                 //                           _emailController.text);

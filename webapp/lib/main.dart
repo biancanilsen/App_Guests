@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'feature/guests/data/database/database_provider.dart';
 import 'feature/guests/data/services/api_service.dart';
+import 'feature/guests/data/services/grpc_service.dart';
 import 'feature/guests/presentation/pages/guest_list.dart';
 
 void main() {
@@ -21,8 +22,8 @@ class MyApp extends StatelessWidget {
       create: (context) => APIService.instance,
       child: BlocProvider(
         create: (context) =>
-            //GuestsCubit é o que vai lidar com a interação entre a tela e o banco de dados, tendo as regas
-            GuestsCubit(apiService: APIService.instance),
+            //GuestsCubit é o que vai lidar com a interação entre a tela e o backend, tendo as regas
+            GuestsCubit(serviceClient: ServiceClient.instance),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',

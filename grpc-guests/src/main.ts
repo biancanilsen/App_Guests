@@ -9,14 +9,13 @@ async function bootstrap() {
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.GRPC,
     options: {
-      url: 'localhost:3000',
+      url: 'localhost:3001',
       package: 'guest',
       protoPath: join(__dirname, 'app/proto/guest.proto'),
     }
   })
 
   app.startAllMicroservices()
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();
-50

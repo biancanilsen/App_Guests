@@ -44,9 +44,9 @@ class APIService {
     var response;
 
     data = {
-      'Name': model.Name,
-      'Phone': model.Phone,
-      'Email': model.Email,
+      'name': model.name,
+      'phone': model.phone,
+      'email': model.email,
     };
     body = json.encode(data);
 
@@ -77,10 +77,10 @@ class APIService {
     var response;
 
     data = {
-      'GuestId': model.GuestId,
-      'Name': model.Name,
-      'Phone': model.Phone,
-      'Email': model.Email,
+      'id': model.id,
+      'name': model.name,
+      'phone': model.phone,
+      'email': model.email,
     };
     body = json.encode(data);
 
@@ -98,11 +98,10 @@ class APIService {
     }
   }
 
-  Future<bool> deleteGuest(guestId) async {
+  Future<bool> deleteGuest(id) async {
     Map<String, String> requestHeaders = {'Content-Type': 'application/json'};
 
-    var url =
-        Uri.http(Config.apiURL, Config.guestURL + "/" + guestId.toString());
+    var url = Uri.http(Config.apiURL, Config.guestURL + "/" + id.toString());
     debugPrint('url: $url');
 
     var response = await client.delete(url, headers: requestHeaders);
