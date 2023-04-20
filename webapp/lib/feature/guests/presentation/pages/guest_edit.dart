@@ -44,8 +44,8 @@ class GuestsEditView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // se for edicao de uma nota existente, os campos do formulario
-    // sao preenchidos com os atributos da nota
+    // se for edicao de um contato existente, os campos do formulario
+    // sao preenchidos com os atributos do contato
     if (guest == null) {
       _nameController.text = '';
       _phoneController.text = '';
@@ -149,7 +149,7 @@ class GuestsEditView extends StatelessWidget {
               ..showSnackBar(const SnackBar(
                 content: Text('Operação realizada com sucesso'),
               ));
-            // apos a nota ser salva, as notas sao recuperadas novamente e
+            // apos o convidado ser salvo, as notas sao recuperadas novamente e
             // o aplicativo apresenta novamenta a tela de lista de notas
             Navigator.pop(context);
             context.read<GuestsCubit>().getGuests();
@@ -160,7 +160,7 @@ class GuestsEditView extends StatelessWidget {
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(const SnackBar(
-                content: Text('Erro ao atualizar nota'),
+                content: Text('Erro'),
               ));
           }
         },
@@ -183,7 +183,7 @@ class GuestsEditView extends StatelessWidget {
                                 BorderSide(width: 1, color: Colors.grey),
                             borderRadius: BorderRadius.circular(15.0),
                           ),
-                          labelText: 'name',
+                          labelText: 'Name',
                         ),
                         controller: _nameController,
                         focusNode: _nameFocusNode,
@@ -273,7 +273,7 @@ class GuestsEditView extends StatelessWidget {
                                 BorderSide(width: 1, color: Colors.grey),
                             borderRadius: BorderRadius.circular(15.0),
                           ),
-                          labelText: 'email',
+                          labelText: 'Email',
                         ),
                         controller: _emailController,
                         focusNode: _emailFocusNode,

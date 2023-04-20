@@ -69,8 +69,8 @@ class GuestsCubit extends Cubit<GuestsState> {
     emit(const GuestsLoading());
     await Future.delayed(const Duration(seconds: 2));
     try {
-      //Se o metodo nao recebeu um id a nota será incluida, caso contrario
-      //a nota existente sera atualizada pelo id
+      //Se o metodo nao recebeu um id o convidado será incluida, caso contrario
+      //o convidado existente sera atualizada pelo id
       debugPrint('id: $id');
       if (id == null) {
         editGuest = await _serviceClient.updateGuests(editGuest);

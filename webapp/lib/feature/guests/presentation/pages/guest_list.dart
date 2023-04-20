@@ -110,7 +110,7 @@ class _Content extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<GuestsCubit>().state;
     // a descricao dos estados esta no arquivo guests_state
-    // os estados nao tratados aqui sao utilizados na tela de edicao da nota
+    // os estados nao tratados aqui sao utilizados na tela de edicao do contato
     // print('guestlist ' + state.toString());
     if (state is GuestsInitial) {
       return const SizedBox();
@@ -182,7 +182,7 @@ class _GuestsList extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            // a nota existente eh enviada como parametro para a
+                            // o convidado existente eh enviada como parametro para a
                             // tela de edicao preencher os campos automaticamente
                             builder: (context) => GuestEditPage(guest: guest)),
                       );
@@ -191,7 +191,7 @@ class _GuestsList extends StatelessWidget {
                   IconButton(
                       icon: const Icon(Icons.delete),
                       onPressed: () {
-                        // excluir nota atraves do id
+                        // excluir convidado atraves do id
                         showDialog<String>(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
