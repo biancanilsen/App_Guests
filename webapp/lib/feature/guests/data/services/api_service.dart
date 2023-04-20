@@ -19,13 +19,13 @@ class APIService {
 
     debugPrint('url: $url');
 
-    var response = await client.get(url, headers: requestHeaders);
+    var response = await http.get(url, headers: requestHeaders);
     debugPrint('response: $response');
 
     if (response.statusCode == 200) {
-      List<Guest> _model = guestFromJson(response.body);
+      List<Guest> _guest = guestFromJson(response.body);
 
-      return _model;
+      return _guest;
     } else {
       return null;
     }
@@ -44,8 +44,9 @@ class APIService {
     var response;
 
     data = {
-      'Name': model.Name,
-      'Phone': model.Phone,
+      'name': model.name,
+      'phone': model.phone,
+      'email': model.email,
     };
     body = json.encode(data);
 
@@ -63,7 +64,7 @@ class APIService {
     }
   }
 
-  Future<Guest> uploadGuests(
+  Future<Guest> updateGuests(
     Guest model,
   ) async {
     var guestURL = Config.guestURL;
@@ -76,12 +77,14 @@ class APIService {
     var response;
 
     data = {
-      'Name': model.Name,
-      'Phone': model.Phone,
+      'id': model.id,
+      'name': model.name,
+      'phone': model.phone,
+      'email': model.email,
     };
     body = json.encode(data);
 
-    response = await http.post(url,
+    response = await http.put(url,
         headers: {"Content-Type": "application/json"}, body: body);
 
     debugPrint('response $response');
@@ -95,10 +98,10 @@ class APIService {
     }
   }
 
-  Future<bool> deleteGuest(guestId) async {
+  Future<bool> deleteGuest(id) async {
     Map<String, String> requestHeaders = {'Content-Type': 'application/json'};
 
-    var url = Uri.http(Config.apiURL, Config.guestURL + "/" + guestId);
+    var url = Uri.http(Config.apiURL, Config.guestURL + "/" + id.toString());
     debugPrint('url: $url');
 
     var response = await client.delete(url, headers: requestHeaders);

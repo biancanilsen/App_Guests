@@ -73,11 +73,11 @@
 //   }
 
 //   //Excluir nota
-//   Future<int> delete(int guestId) async {
+//   Future<int> delete(int id) async {
 //     final db = await instance.db;
 //     final result =
-//         await db.rawDelete('DELETE FROM guests WHERE id = ?', [guestId]);
-//     // print('Nota de id ${guestId} excluída com sucesso.');
+//         await db.rawDelete('DELETE FROM guests WHERE id = ?', [id]);
+//     // print('Nota de id ${id} excluída com sucesso.');
 //     // o result é a quantidade de linhas excluídas
 //     return result;
 //   }

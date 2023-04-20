@@ -4,7 +4,7 @@ project(runner LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
-set(BINARY_NAME "flutter_bloc")
+set(BINARY_name "flutter_bloc")
 # The unique GTK application identifier for this application. See:
 # https://wiki.gnome.org/HowDoI/ChooseApplicationID
 set(APPLICATION_ID "com.example.flutter_bloc")
@@ -56,11 +56,11 @@ pkg_check_modules(GTK REQUIRED IMPORTED_TARGET gtk+-3.0)
 
 add_definitions(-DAPPLICATION_ID="${APPLICATION_ID}")
 
-# Define the application target. To change its name, change BINARY_NAME above,
+# Define the application target. To change its name, change BINARY_name above,
 # not the value here, or `flutter run` will no longer work.
 #
 # Any new source files that you add to the application should be added here.
-add_executable(${BINARY_NAME}
+add_executable(${BINARY_name}
   "main.cc"
   "my_application.cc"
   "${FLUTTER_MANAGED_DIR}/generated_plugin_registrant.cc"
@@ -68,20 +68,20 @@ add_executable(${BINARY_NAME}
 
 # Apply the standard set of build settings. This can be removed for applications
 # that need different build settings.
-apply_standard_settings(${BINARY_NAME})
+apply_standard_settings(${BINARY_name})
 
 # Add dependency libraries. Add any application-specific dependencies here.
-target_link_libraries(${BINARY_NAME} PRIVATE flutter)
-target_link_libraries(${BINARY_NAME} PRIVATE PkgConfig::GTK)
+target_link_libraries(${BINARY_name} PRIVATE flutter)
+target_link_libraries(${BINARY_name} PRIVATE PkgConfig::GTK)
 
 # Run the Flutter tool portions of the build. This must not be removed.
-add_dependencies(${BINARY_NAME} flutter_assemble)
+add_dependencies(${BINARY_name} flutter_assemble)
 
 # Only the install-generated bundle's copy of the executable will launch
 # correctly, since the resources must in the right relative locations. To avoid
 # people trying to run the unbundled copy, put it in a subdirectory instead of
 # the default top-level location.
-set_target_properties(${BINARY_NAME}
+set_target_properties(${BINARY_name}
   PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/intermediates_do_not_run"
 )
@@ -107,7 +107,7 @@ install(CODE "
 set(INSTALL_BUNDLE_DATA_DIR "${CMAKE_INSTALL_PREFIX}/data")
 set(INSTALL_BUNDLE_LIB_DIR "${CMAKE_INSTALL_PREFIX}/lib")
 
-install(TARGETS ${BINARY_NAME} RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}"
+install(TARGETS ${BINARY_name} RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}"
   COMPONENT Runtime)
 
 install(FILES "${FLUTTER_ICU_DATA_FILE}" DESTINATION "${INSTALL_BUNDLE_DATA_DIR}"
@@ -124,11 +124,11 @@ endforeach(bundled_library)
 
 # Fully re-copy the assets directory on each build to avoid having stale files
 # from a previous install.
-set(FLUTTER_ASSET_DIR_NAME "flutter_assets")
+set(FLUTTER_ASSET_DIR_name "flutter_assets")
 install(CODE "
-  file(REMOVE_RECURSE \"${INSTALL_BUNDLE_DATA_DIR}/${FLUTTER_ASSET_DIR_NAME}\")
+  file(REMOVE_RECURSE \"${INSTALL_BUNDLE_DATA_DIR}/${FLUTTER_ASSET_DIR_name}\")
   " COMPONENT Runtime)
-install(DIRECTORY "${PROJECT_BUILD_DIR}/${FLUTTER_ASSET_DIR_NAME}"
+install(DIRECTORY "${PROJECT_BUILD_DIR}/${FLUTTER_ASSET_DIR_name}"
   DESTINATION "${INSTALL_BUNDLE_DATA_DIR}" COMPONENT Runtime)
 
 # Install the AOT library on non-Debug builds only.

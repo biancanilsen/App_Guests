@@ -1,28 +1,28 @@
 syntax = "proto3";
-import "google/protobuf/empty.proto";
 package guest;
 
 service GuestService {
     rpc Create(GuestRequest) returns (GuestResponse){}; 
     rpc Update(GuestRequest) returns (GuestResponse){}; 
-    rpc Index(google.protobuf.Empty) returns (GuestsResponse){}; 
+    rpc Index(Empty) returns (GuestsResponse){}; 
     rpc Show(idRequest) returns (GuestResponse){}; 
-    rpc Delete(idRequest) returns (google.protobuf.Empty){}; 
+    rpc Delete(idRequest) returns (Empty){}; 
 }
 
+message Empty{}
 
 message idRequest {
-    string id = 1;
+    String id = 1;
 }
 message GuestRequest{
-    optional string id = 1;
+    optional String id = 1;
     string name = 2;
     string phone = 3;
     string email = 4; 
 }
 
 message GuestResponse{
-    string id = 1;
+    String id = 1;
     string name = 2;
     string phone = 3;
     string email = 4;

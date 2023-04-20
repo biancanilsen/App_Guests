@@ -8,42 +8,42 @@ String guestToJson(List<Guest> data) =>
 
 class Guest {
   Guest({
-    this.GuestId,
-    required this.Name,
-    required this.Phone,
-    required this.Email,
+    this.id,
+    required this.name,
+    required this.phone,
+    required this.email,
   });
 
-  int? GuestId;
-  String Name;
-  String Phone;
-  String Email;
+  String? id;
+  String name;
+  String phone;
+  String email;
 
 // Transformando a resposta em um objeto
   factory Guest.fromJson(Map<String, dynamic> json) => Guest(
-        GuestId: json["GuestId"],
-        Name: json["Name"],
-        Phone: json["Phone"],
-        Email: json["Email"],
+        id: json["id"],
+        name: json["name"],
+        phone: json["phone"],
+        email: json["email"],
       );
 
   Map<String, dynamic> toJson() => {
-        "GuestId": GuestId,
-        "Name": Name,
-        "Phone": Phone,
-        "Email": Email,
+        "id": id,
+        "name": name,
+        "phone": phone,
+        "email": email,
       };
 
   Guest copy({
-    int? GuestId,
-    String? Name,
-    String? Phone,
-    String? Email,
+    String? id,
+    String? name,
+    String? phone,
+    String? email,
   }) =>
       Guest(
-        GuestId: GuestId ?? this.GuestId,
-        Name: Name ?? this.Name,
-        Phone: Phone ?? this.Phone,
-        Email: Email ?? this.Email,
+        id: id ?? this.id,
+        name: name ?? this.name,
+        phone: phone ?? this.phone,
+        email: email ?? this.email,
       );
 }

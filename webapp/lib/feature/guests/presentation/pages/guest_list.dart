@@ -4,11 +4,14 @@ import 'package:flutter_guests/feature/guests/presentation/pages/guest_list.dart
 import 'package:flutter_guests/feature/guests/presentation/pages/guest_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grpc/grpc.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/cupertino.dart';
 
 class GuestListPage extends StatelessWidget {
   const GuestListPage({Key? key}) : super(key: key);
 
-  // o GuestsCubit que foi criado e providenciado para o MaterialApp eh recuperado
+  // O GuestsCubit que foi criado e providenciado para o MaterialApp e recuperado
   // via construtor .value e executa a funcao de buscar os contatos,
   // ou seja, novas instancias nao usam o .value, instancias existentes sim
   @override
@@ -26,54 +29,75 @@ class DocumentosView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Guests'),
-        // actions: <Widget>[
-        //   IconButton(
-        //     icon: const Icon(Icons.clear_all),
-        //     onPressed: () {
-        //       // excluir todas as notas
-        //       showDialog<String>(
-        //         context: context,
-        //         builder: (BuildContext context) => AlertDialog(
-        //           title: const Text('Excluir Todas as Notas'),
-        //           content: const Text('Confirmar operação?'),
-        //           actions: <Widget>[
-        //             TextButton(
-        //               onPressed: () => Navigator.pop(context),
-        //               child: const Text('Cancelar'),
-        //             ),
-        //             TextButton(
-        //               onPressed: () {
-        //                 context.read<GuestsCubit>().deleteAllGuests();
-        //                 Navigator.pop(context);
-        //                 ScaffoldMessenger.of(context)
-        //                   ..hideCurrentSnackBar()
-        //                   ..showSnackBar(const SnackBar(
-        //                     content: Text('Notas excluídas com sucesso'),
-        //                   ));
-        //               },
-        //               child: const Text('OK'),
-        //             ),
-        //           ],
-        //         ),
-        //       );
-        //     },
-        //   ),
-        // ],
+        backgroundColor: const Color(0xFF256070),
+        foregroundColor: Colors.white,
+        centerTitle: true,
+        elevation: 0,
       ),
-      body: const _Content(),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          // como o FAB cria uma nota nova, a nota nao eh parametro recebido
-          // na tela de edicao
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const GuestEditPage(guest: null)),
-          );
-        },
+      body: Column(
+        children: [
+          Container(
+            height: 200,
+            width: double.infinity,
+            child: Image.asset(
+              "images/guestsContainer.png",
+            ),
+          ),
+          const Expanded(child: _Content()),
+        ],
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: SizedBox(
+          height: 70,
+          width: 70,
+          child: FloatingActionButton(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const GuestEditPage(guest: null)),
+              );
+            },
+            child: Container(
+              height: 70,
+              width: 70,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.white, width: 4),
+                shape: BoxShape.circle,
+                gradient: const LinearGradient(
+                  begin: Alignment(0.7, -0.5),
+                  end: Alignment(0.6, 0.5),
+                  colors: [
+                    Color(0xFF256070),
+                    Color.fromARGB(255, 117, 164, 177),
+                  ],
+                ),
+              ),
+              child: const Icon(Icons.add, size: 30),
+            ),
+          ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomAppBar(
+        color: const Color(0xFF256070),
+        shape: const CircularNotchedRectangle(),
+        child: Container(
+          height: 60,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -106,7 +130,7 @@ class _Content extends StatelessWidget {
       }
     } else {
       return const Center(
-        child: Text('Erro ao recuperar notas.'),
+        child: Text('Erro ao recuperar convidados.'),
       );
     }
   }
@@ -117,73 +141,95 @@ class _GuestsList extends StatelessWidget {
   final List<Guest>? guests;
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        for (final guest in guests!) ...[
-          Padding(
-            padding: const EdgeInsets.all(2.5),
-            child: ListTile(
-              tileColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              title: Text(guest.Name),
-              subtitle: Text(
-                guest.Phone,
-              ),
-              trailing: Wrap(children: <Widget>[
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          // a nota existente eh enviada como parametro para a
-                          // tela de edicao preencher os campos automaticamente
-                          builder: (context) => GuestEditPage(guest: guest)),
-                    );
-                  },
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 28.0),
+      child: ListView(
+        children: [
+          for (final guest in guests!) ...[
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 15.5, left: 10.5, right: 10.5),
+              child: ListTile(
+                // hoverColor: Colors.red,
+                tileColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  side: BorderSide(color: Colors.grey, width: 1),
                 ),
-                IconButton(
-                    icon: const Icon(Icons.delete),
+                title: Text(guest.name),
+                subtitle: Text(
+                  guest.phone,
+                ),
+                trailing: Wrap(children: <Widget>[
+                  IconButton(
+                    icon: const Icon(Icons.message),
                     onPressed: () {
-                      // excluir nota atraves do id
-                      showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => AlertDialog(
-                          title: const Text('Excluir Nota'),
-                          content: const Text('Confirmar operação?'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text('Cancelar'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                context
-                                    .read<GuestsCubit>()
-                                    .deleteGuest(guest.GuestId);
-                                Navigator.pop(context);
-                                ScaffoldMessenger.of(context)
-                                  ..hideCurrentSnackBar()
-                                  ..showSnackBar(const SnackBar(
-                                    content: Text('Nota excluída com sucesso'),
-                                  ));
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        ),
+                      openWhatsApp() async {
+                        var whatsappUrl =
+                            "whatsapp://send?phone=+5586994324465&text=Olá,tudo bem ?";
+
+                        if (await canLaunch(whatsappUrl)) {
+                          await launch(whatsappUrl);
+                        } else {
+                          throw 'Could not launch $whatsappUrl';
+                        }
+                      }
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            // a nota existente eh enviada como parametro para a
+                            // tela de edicao preencher os campos automaticamente
+                            builder: (context) => GuestEditPage(guest: guest)),
                       );
-                    }),
-              ]),
+                    },
+                  ),
+                  IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        // excluir nota atraves do id
+                        showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: const Text('Excluir convidado'),
+                            content: const Text('Confirmar operação?'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text('Cancelar'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  context
+                                      .read<GuestsCubit>()
+                                      .deleteGuest(guest.id);
+                                  Navigator.pop(context);
+                                  ScaffoldMessenger.of(context)
+                                    ..hideCurrentSnackBar()
+                                    ..showSnackBar(const SnackBar(
+                                      content: Text(
+                                          'Convidado excluído com sucesso'),
+                                    ));
+                                },
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                ]),
+              ),
             ),
-          ),
-          // const Divider(
-          //   height: 2,
-          // ),
+            // const Divider(
+            //   height: 2,
+            // ),
+          ],
         ],
-      ],
+      ),
     );
   }
 }
