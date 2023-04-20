@@ -78,15 +78,15 @@ class GuestsEditView extends StatelessWidget {
                   elevation: 0,
                   onPressed: state is GuestValidated
                       ? () {
-                          // if (_formKey.currentState!.validate()) {
-                          //   //fechar teclado
-                          //   FocusScope.of(context).unfocus();
-                          //   context.read<GuestsCubit>().saveGuest(
-                          //       guest?.id,
-                          //       _nameController.text,
-                          //       _phoneController.text,
-                          //       _emailController.text);
-                          // }
+                          if (_formKey.currentState!.validate()) {
+                            //fechar teclado
+                            FocusScope.of(context).unfocus();
+                            context.read<GuestsCubit>().saveGuest(
+                                guest?.id,
+                                _nameController.text,
+                                _phoneController.text,
+                                _emailController.text);
+                          }
                         }
                       : null,
                   child: Container(
