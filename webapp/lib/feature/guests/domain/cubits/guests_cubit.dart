@@ -1,10 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_guests/feature/guests/data/database/database_provider.dart';
 import 'package:flutter_guests/feature/guests/data/models/guest_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:grpc/grpc.dart';
 import '../../../../generated/guest.pb.dart';
-import '../../data/services/api_service.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../data/services/grpc_service.dart';
@@ -69,8 +67,8 @@ class GuestsCubit extends Cubit<GuestsState> {
     emit(const GuestsLoading());
     await Future.delayed(const Duration(seconds: 2));
     try {
-      //Se o metodo nao recebeu um id a nota será incluida, caso contrario
-      //a nota existente sera atualizada pelo id
+      //Se o metodo nao recebeu um id o convidado será incluida, caso contrario
+      //o convidado existente sera atualizada pelo id
       debugPrint('id: $id');
       if (id == null) {
         editGuest = await _serviceClient.updateGuests(editGuest);

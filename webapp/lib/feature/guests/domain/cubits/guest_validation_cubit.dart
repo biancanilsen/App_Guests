@@ -6,7 +6,7 @@ part 'guest_validation_state.dart';
 class GuestValidationCubit extends Cubit<GuestValidationState> {
   GuestValidationCubit() : super(const GuestValidating());
 
-  //validar formulario de edicao da nota
+  //validar formulario de edicao do convidado
   void validaForm(String titulo, String conteudo) {
     String cubitTituloMessage = '';
     String cubitConteudoMessage = '';
