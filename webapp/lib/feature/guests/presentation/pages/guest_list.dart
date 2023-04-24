@@ -109,7 +109,7 @@ class _Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<GuestsCubit>().state;
-    // a descricao dos estados esta no arquivo guests_state
+    // A descricao dos estados esta no arquivo guests_state
     // os estados nao tratados aqui sao utilizados na tela de edicao do contato
     // print('guestlist ' + state.toString());
     if (state is GuestsInitial) {
@@ -162,27 +162,12 @@ class _GuestsList extends StatelessWidget {
                 ),
                 trailing: Wrap(children: <Widget>[
                   IconButton(
-                    icon: const Icon(Icons.message),
-                    onPressed: () {
-                      openWhatsApp() async {
-                        var whatsappUrl =
-                            "whatsapp://send?phone=+5586994324465&text=Olá,tudo bem ?";
-
-                        if (await canLaunch(whatsappUrl)) {
-                          await launch(whatsappUrl);
-                        } else {
-                          throw 'Could not launch $whatsappUrl';
-                        }
-                      }
-                    },
-                  ),
-                  IconButton(
                     icon: const Icon(Icons.edit),
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            // o convidado existente eh enviada como parametro para a
+                            // O convidado existente eh enviada como parametro para a
                             // tela de edicao preencher os campos automaticamente
                             builder: (context) => GuestEditPage(guest: guest)),
                       );
@@ -191,7 +176,7 @@ class _GuestsList extends StatelessWidget {
                   IconButton(
                       icon: const Icon(Icons.delete),
                       onPressed: () {
-                        // excluir convidado atraves do id
+                        // Excluir convidado atraves do id
                         showDialog<String>(
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
@@ -224,9 +209,6 @@ class _GuestsList extends StatelessWidget {
                 ]),
               ),
             ),
-            // const Divider(
-            //   height: 2,
-            // ),
           ],
         ],
       ),

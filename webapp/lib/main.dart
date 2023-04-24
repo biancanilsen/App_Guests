@@ -1,8 +1,6 @@
 import 'package:flutter_guests/feature/guests/domain/cubits/guests_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'feature/guests/data/database/database_provider.dart';
-import 'feature/guests/data/services/api_service.dart';
 import 'feature/guests/data/services/grpc_service.dart';
 import 'feature/guests/presentation/pages/guest_list.dart';
 
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (context) => APIService.instance,
+      create: (context) => ServiceClient.instance,
       child: BlocProvider(
         create: (context) =>
             //GuestsCubit é o que vai lidar com a interação entre a tela e o backend, tendo as regas

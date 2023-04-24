@@ -1,10 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter_guests/feature/guests/data/database/database_provider.dart';
 import 'package:flutter_guests/feature/guests/data/models/guest_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:grpc/grpc.dart';
 import '../../../../generated/guest.pb.dart';
-import '../../data/services/api_service.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../data/services/grpc_service.dart';
