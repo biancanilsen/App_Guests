@@ -302,52 +302,6 @@ class GuestsEditView extends StatelessWidget {
                     );
                   },
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(vertical: 16.0),
-                //   child: SizedBox(
-                //     width: double.infinity,
-                //     height: 65,
-                //     child:
-                //         BlocBuilder<GuestValidationCubit, GuestValidationState>(
-                //       builder: (context, state) {
-                //         // o botao de salvar eh habilitado somente quando
-                //         // o formulario eh completamente validado
-                //         return Padding(
-                //           padding: const EdgeInsets.all(8.0),
-                //           child: ElevatedButton(
-                //             style: ButtonStyle(
-                //                 foregroundColor:
-                //                     MaterialStateProperty.all<Color>(
-                //                         Colors.white),
-                //                 backgroundColor:
-                //                     MaterialStateProperty.all<Color>(
-                //                         Colors.green),
-                //                 shape: MaterialStateProperty.all<
-                //                         RoundedRectangleBorder>(
-                //                     RoundedRectangleBorder(
-                //                         borderRadius:
-                //                             BorderRadius.circular(15.0),
-                //                         side: BorderSide(color: Colors.grey)))),
-                //             onPressed: state is GuestValidated
-                //                 ? () {
-                //                     if (_formKey.currentState!.validate()) {
-                //                       //fechar teclado
-                //                       FocusScope.of(context).unfocus();
-                //                       context.read<GuestsCubit>().saveGuest(
-                //                           guest?.id,
-                //                           _nameController.text,
-                //                           _phoneController.text,
-                //                           _emailController.text);
-                //                     }
-                //                   }
-                //                 : null,
-                //             child: const Text('Salvar'),
-                //           ),
-                //         );
-                //       },
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
