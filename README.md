@@ -32,4 +32,7 @@ Emulate a device and run "flutter run start"
 
 ##  Views:
 
-![demonstração](https://user-images.githubusercontent.com/86383966/234570144-f81484a7-0016-4157-aefd-012c78ff9f9d.png)
+![WhatsApp_Image_2023-04-25_at_16 25 30-removebg-preview](https://user-images.githubusercontent.com/86383966/234570319-43040c08-edf5-4c84-ade2-48c9228d6fe6.png)
+
+![WhatsApp_Image_2023-04-25_at_16 25 51-removebg-preview](https://user-
+images.githubusercontent.com/86383966/234570326-b91526a7-aa1c-4ddd-bab6-b7ad6c8f7161.png)
