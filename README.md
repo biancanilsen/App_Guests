@@ -6,7 +6,7 @@ The project consists of a Microservice using NestJs with gRPC and Postgres as db
   
 Backend:
 
-> Developed using: Node.js, Sequelize, Express, MySQL, JWT, Jest
+> Developed using: Nest, grpc, Postgres, Flutter, Material, Bloc, http2
 
 ##  Installing Dependencies of the back-end:
 
